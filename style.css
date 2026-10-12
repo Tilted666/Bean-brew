@@ -1,0 +1,774 @@
+/* =========================================================
+   Bean & Brew — стили
+   Тёмная версия палитры (по согласованию с заказчиком)
+   ========================================================= */
+
+:root {
+  --coffee: #1C140F;       /* основной тёмный фон сайта */
+  --coffee-deep: #100B08;  /* ещё темнее — шапка и футер, чтобы отделить от фона */
+  --surface: #2B2019;      /* поверхность карточек меню */
+  --cream: #F3EAD8;        /* светлый текст на тёмном фоне */
+  --roast: #B5703F;        /* обжарка — акцент, чуть светлее для контраста на тёмном */
+  --crema: #D9AD71;        /* крема — акцент заголовков */
+  --terracotta: #E2663E;   /* акцент кнопок */
+  --sage: #8FA67D;         /* приглушённый зелёный */
+  --line: rgba(243, 234, 216, 0.12); /* тонкие разделители на тёмном фоне */
+
+  --font-heading: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  --radius: 14px;
+}
+
+/* ---------- Сброс и база ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--coffee);
+  color: var(--cream);
+  line-height: 1.6;
+  overflow-x: hidden;   /* fallback для старых браузеров */
+  overflow-x: clip;     /* современный вариант: не ломает sticky */
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  color: var(--cream);
+  line-height: 1.1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul {
+  list-style: none;
+}
+
+section {
+  padding: 5rem 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.85rem;
+  color: var(--terracotta);
+  margin-bottom: 0.75rem;
+}
+
+.tag--center {
+  text-align: center;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+/* ---------- Кнопки ---------- */
+.btn {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.btn-primary {
+  background: var(--terracotta);
+  color: var(--cream);
+  box-shadow: 0 4px 20px rgba(226, 102, 62, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(226, 102, 62, 0.6);
+  background: #ef7a4f;
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--cream);
+  color: var(--cream);
+}
+
+.btn-outline:hover {
+  background: var(--cream);
+  color: var(--coffee-deep);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+}
+
+/* =========================================================
+   Шапка / навигация
+   ========================================================= */
+
+/* Шапка всегда отделена от остального сайта более тёмным цветом,
+   чтобы не сливаться с фоном ни в одном состоянии прокрутки */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--coffee-deep);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+  transition: background-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+.site-header.scrolled {
+  background-color: rgba(16, 11, 8, 0.94);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 26px rgba(0, 0, 0, 0.55);
+}
+
+.navbar {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--cream);
+  white-space: nowrap;
+}
+
+.logo-bean {
+  color: var(--terracotta);
+  font-size: 0.8rem;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  position: relative;
+  font-weight: 500;
+  padding-bottom: 4px;
+  color: var(--cream);
+}
+
+/* Эффект "прорастания" подчёркивания */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: var(--terracotta);
+  transition: width 0.35s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Бургер — на десктопе полностью скрыт */
+.burger-label {
+  display: none;
+}
+
+/* Визуально скрыт, но фокусируется с клавиатуры */
+.burger-checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none; /* клик по нему не нужен, label работает через for */
+}
+
+/* Видимый focus-индикатор на label, когда фокус на чекбоксе */
+.burger-checkbox:focus-visible + .burger-label {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* =========================================================
+   Hero
+   ========================================================= */
+
+/* Hero растянут на всю ширину окна, а не ограничен общим
+   max-width секций — чтобы фон доходил до самых краёв экрана */
+.hero {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  min-height: 92vh;
+  min-height: 92svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 2rem 1.5rem;
+}
+
+.hero-letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(40px) rotate(4deg);
+  animation: letterIn 0.7s cubic-bezier(.2,.8,.2,1) forwards;
+  animation-delay: calc(var(--i) * 0.07s);
+}
+
+/* TODO: заменить/дополнить градиент реальным фоновым фото кофейни,
+   например: background: linear-gradient(...), url('фото.jpg') center/cover; */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(120deg, #0d0906, var(--coffee), var(--roast), var(--terracotta));
+  background-size: 300% 300%;
+  animation: gradientShift 18s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  color: var(--cream);
+}
+
+.hero-title {
+  font-size: clamp(3rem, 12vw, 6.5rem);
+  font-weight: 700;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 0.3rem;
+  color: var(--cream);
+}
+
+.hero-line {
+  display: inline-flex;
+}
+
+.hero-line--accent {
+  color: var(--crema);
+}
+
+.hero-title span[style] {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(40px) rotate(4deg);
+  animation: letterIn 0.7s cubic-bezier(.2,.8,.2,1) forwards;
+  animation-delay: calc(var(--i) * 0.07s);
+}
+
+@keyframes letterIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+
+.hero-subtitle {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  margin: 1.5rem 0 2.5rem;
+  opacity: 0;
+  animation: fadeInSimple 1s ease forwards;
+  animation-delay: 1s;
+}
+
+@keyframes fadeInSimple {
+  to { opacity: 1; }
+}
+
+.hero .btn-primary {
+  opacity: 0;
+  animation: fadeInSimple 1s ease forwards;
+  animation-delay: 1.3s;
+}
+
+/* Декоративные покачивающиеся элементы */
+.bean-decor {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.25;
+  animation: float 6s ease-in-out infinite;
+  z-index: 0;
+}
+
+.bean-decor--1 {
+  top: 15%;
+  left: 8%;
+  animation-delay: 0s;
+}
+
+.bean-decor--2 {
+  bottom: 12%;
+  right: 10%;
+  font-size: 4rem;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-8deg); }
+  50% { transform: translateY(-20px) rotate(8deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 42px;
+  border: 2px solid var(--cream);
+  border-radius: 20px;
+  opacity: 0.7;
+}
+
+.scroll-hint span {
+  display: block;
+  width: 5px;
+  height: 5px;
+  margin: 8px auto 0;
+  background: var(--cream);
+  border-radius: 50%;
+  animation: scrollDot 1.8s ease infinite;
+}
+
+@keyframes scrollDot {
+  0% { transform: translateY(0); opacity: 1; }
+  80% { opacity: 0; }
+  100% { transform: translateY(16px); opacity: 0; }
+}
+
+/* =========================================================
+   Появление блоков при скролле
+   ========================================================= */
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================================
+   О нас
+   ========================================================= */
+
+.about {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.about-text h2 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  margin-bottom: 1.2rem;
+}
+
+.about-text p:not(.tag) {
+  font-size: 1.1rem;
+  max-width: 48ch;
+  color: rgba(243, 234, 216, 0.85);
+}
+
+.about-photo img {
+  border-radius: var(--radius);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--line);
+}
+
+/* =========================================================
+   Меню / аккордеон
+   ========================================================= */
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.menu-category {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.menu-category[open] {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.menu-category summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 1.3rem 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--crema);
+  transition: background-color 0.3s ease;
+}
+
+.menu-category summary::-webkit-details-marker {
+  display: none;
+}
+
+.menu-category summary:hover {
+  background-color: rgba(217, 173, 113, 0.1);
+}
+
+.chevron {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  color: var(--terracotta);
+  transition: transform 0.35s ease;
+}
+
+.menu-category[open] .chevron {
+  transform: rotate(45deg);
+}
+
+/* Плавное раскрытие и закрытие аккордеона.
+   Высотой управляет JS (см. script.js) — так анимация
+   одинаково работает и при открытии, и при закрытии. */
+.menu-content {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.45s ease;
+}
+
+/* Отменяем стандартное поведение браузера, которое мгновенно
+   прячет содержимое <details> без атрибута open — теперь
+   видимость полностью управляется высотой выше */
+.menu-category:not([open]) > .menu-content {
+  display: block;
+}
+
+/* Запасной вариант на случай, если JS не выполнился */
+.menu-category[open] .menu-content {
+  height: auto;
+}
+
+.menu-content-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.menu-list {
+  padding: 0.5rem 1.6rem 1.6rem;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 0.6rem;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.menu-item:hover {
+  background-color: rgba(226, 102, 62, 0.14);
+  transform: translateX(4px);
+}
+
+.menu-item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-name {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--cream);
+}
+
+.item-desc {
+  font-size: 0.9rem;
+  color: rgba(243, 234, 216, 0.6);
+}
+
+.item-price {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--terracotta);
+  white-space: nowrap;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.menu-item:hover .item-price {
+  transform: translateX(-6px) scale(1.08);
+  color: var(--sage);
+}
+
+/* =========================================================
+   Контакты
+   ========================================================= */
+
+.contacts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+.contacts-info h2 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  margin-bottom: 1.2rem;
+}
+
+.contacts-list {
+  margin: 1.5rem 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  font-size: 1.05rem;
+  color: rgba(243, 234, 216, 0.85);
+}
+
+.contacts-list strong {
+  color: var(--crema);
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.2rem;
+}
+
+.map-placeholder {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(243, 234, 216, 0.04),
+    rgba(243, 234, 216, 0.04) 10px,
+    rgba(243, 234, 216, 0.08) 10px,
+    rgba(243, 234, 216, 0.08) 20px
+  );
+  border-radius: var(--radius);
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+  font-family: var(--font-mono);
+  border: 2px dashed var(--line);
+}
+
+/* =========================================================
+   Футер
+   ========================================================= */
+
+.site-footer {
+  background: var(--coffee-deep);
+  color: var(--cream);
+  padding: 3rem 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.footer-links a {
+  position: relative;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: var(--crema);
+}
+
+.footer-copy {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  font-family: var(--font-mono);
+}
+
+/* =========================================================
+   Адаптивность — планшет и десктоп
+   ========================================================= */
+
+@media (min-width: 768px) {
+  .about {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .about-photo {
+    order: 2;
+  }
+
+  .contacts {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* =========================================================
+   Мобильное бургер-меню (без JS — через checkbox hack)
+   ========================================================= */
+
+@media (max-width: 767px) {
+  .burger-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 110;
+  }
+
+  .burger-label span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--cream);
+    border-radius: 2px;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--coffee-deep);
+    border-bottom: 1px solid var(--line);
+    gap: 0;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s ease, padding 0.45s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.45);
+  }
+
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 1rem;
+  }
+
+  /* Когда чекбокс отмечен — показываем меню и крестик вместо бургера */
+  .burger-checkbox:checked ~ .nav-links {
+    max-height: 300px;
+    padding: 0.5rem 0;
+  }
+
+  .burger-checkbox:checked ~ .burger-label span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .burger-checkbox:checked ~ .burger-label span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .burger-checkbox:checked ~ .burger-label span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+}
+
+/* =========================================================
+   Уважаем prefers-reduced-motion
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hero-bg {
+    animation: none;
+    background-position: 0% 50%;
+  }
+
+  .fade-in {
+    opacity: 1;
+    transform: none;
+  }
+}
